@@ -1,0 +1,918 @@
+<title>Girisankar Solaimalai</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+/* ================================================================
+   DESIGN TOKENS — dark-first, blueprint/schematic
+   Layout: sticky nav → hero → research → publications → projects → skills → education → contact
+================================================================ */
+:root {
+  --bg:         #060D1A;
+  --bg-2:       #0B1628;
+  --bg-card:    #0D1C32;
+  --fg:         #DDE8F4;
+  --fg-muted:   #6E90B2;
+  --fg-dim:     #2E4A66;
+  --accent:     #0A7EFF;
+  --accent-lit: #3DA8FF;
+  --accent-dim: rgba(10,126,255,0.12);
+  --green:      #1EB888;
+  --green-dim:  rgba(30,184,136,0.10);
+  --amber:      #F0A000;
+  --amber-dim:  rgba(240,160,0,0.10);
+  --border:     rgba(61,168,255,0.10);
+  --border-mid: rgba(61,168,255,0.22);
+  --border-hi:  rgba(61,168,255,0.42);
+  --f-head: 'Barlow Condensed', system-ui, sans-serif;
+  --f-body: 'Source Sans 3', system-ui, sans-serif;
+  --f-mono: 'JetBrains Mono', 'Courier New', monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:         #EDF3FB;
+    --bg-2:       #FFFFFF;
+    --bg-card:    #F4F8FE;
+    --fg:         #0A1828;
+    --fg-muted:   #3B5F80;
+    --fg-dim:     #9BB8D4;
+    --accent:     #0060CC;
+    --accent-lit: #0A7EFF;
+    --accent-dim: rgba(0,96,204,0.08);
+    --green:      #178866;
+    --green-dim:  rgba(23,136,102,0.08);
+    --amber:      #C07800;
+    --amber-dim:  rgba(192,120,0,0.08);
+    --border:     rgba(0,96,204,0.10);
+    --border-mid: rgba(0,96,204,0.22);
+    --border-hi:  rgba(0,96,204,0.42);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg:         #EDF3FB;
+  --bg-2:       #FFFFFF;
+  --bg-card:    #F4F8FE;
+  --fg:         #0A1828;
+  --fg-muted:   #3B5F80;
+  --fg-dim:     #9BB8D4;
+  --accent:     #0060CC;
+  --accent-lit: #0A7EFF;
+  --accent-dim: rgba(0,96,204,0.08);
+  --green:      #178866;
+  --green-dim:  rgba(23,136,102,0.08);
+  --amber:      #C07800;
+  --amber-dim:  rgba(192,120,0,0.08);
+  --border:     rgba(0,96,204,0.10);
+  --border-mid: rgba(0,96,204,0.22);
+  --border-hi:  rgba(0,96,204,0.42);
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+img { max-width: 100%; }
+
+body {
+  font-family: var(--f-body);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  overflow-x: hidden;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 0;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--bg); z-index: 200;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0.85rem 0;
+  background: rgba(6,13,26,0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-mid);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) nav { background: rgba(237,243,251,0.9); }
+}
+:root[data-theme="light"] nav { background: rgba(237,243,251,0.9); }
+
+.nav-brand {
+  font-family: var(--f-head); font-weight: 700; font-size: 1.05rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--fg); text-decoration: none;
+}
+.nav-brand em { color: var(--accent-lit); font-style: normal; }
+.nav-links { display: flex; list-style: none; gap: 1.5rem; }
+.nav-links a {
+  font-family: var(--f-mono); font-size: 0.68rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--fg-muted); text-decoration: none; transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--accent-lit); }
+.theme-toggle {
+  background: transparent; border: 1px solid var(--border-mid);
+  color: var(--fg-muted); font-family: var(--f-mono); font-size: 0.65rem;
+  padding: 0.3rem 0.55rem; cursor: pointer; letter-spacing: 0.06em; transition: all 0.15s;
+}
+.theme-toggle:hover { border-color: var(--accent-lit); color: var(--accent-lit); }
+@media (max-width: 640px) { .nav-links { display: none; } }
+
+/* LAYOUT */
+.page { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; }
+.section { padding: 4.5rem 0; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+
+.section-eyebrow {
+  font-family: var(--f-mono); font-size: 0.66rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-lit);
+  margin-bottom: 0.35rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.section-eyebrow::after {
+  content: ''; display: block; height: 1px; width: 2.5rem;
+  background: var(--accent-lit); opacity: 0.5;
+}
+.section-title {
+  font-family: var(--f-head); font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; margin-bottom: 2.5rem;
+}
+
+/* HERO */
+.hero { padding: 5.5rem 0 4rem; border-bottom: 1px solid var(--border); }
+.hero-kicker {
+  font-family: var(--f-mono); font-size: 0.72rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-lit);
+  margin-bottom: 1.1rem; display: flex; align-items: center; gap: 0.6rem;
+}
+.hero-kicker::before {
+  content: ''; display: inline-block; width: 0.5rem; height: 0.5rem;
+  background: var(--accent); animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.4; transform:scale(0.7); }
+}
+@media (prefers-reduced-motion: reduce) { .hero-kicker::before { animation: none; } }
+
+.hero h1 {
+  font-family: var(--f-head); font-size: clamp(3.2rem, 10vw, 6.5rem);
+  font-weight: 800; line-height: 0.95; letter-spacing: -0.02em;
+  text-wrap: balance; margin-bottom: 0.5rem;
+}
+.hero h1 .line2 { color: var(--accent-lit); display: block; }
+.hero-role {
+  font-family: var(--f-head); font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--fg-muted); margin-bottom: 2rem;
+}
+.hero-bio {
+  max-width: 560px; font-size: 1.05rem; color: var(--fg-muted);
+  line-height: 1.75; margin-bottom: 2.5rem;
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 3rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.65rem 1.3rem; font-family: var(--f-mono); font-size: 0.72rem;
+  letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none;
+  border: 1px solid transparent; cursor: pointer; transition: all 0.18s; font-weight: 500;
+}
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-lit); border-color: var(--accent-lit); }
+.btn-ghost { background: transparent; color: var(--fg-muted); border-color: var(--border-mid); }
+.btn-ghost:hover { color: var(--fg); border-color: var(--border-hi); }
+
+.stats-strip {
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 0; border: 1px solid var(--border-mid); width: fit-content; max-width: 100%;
+}
+@media (max-width: 500px) { .stats-strip { grid-template-columns: repeat(2, 1fr); } }
+.stat-cell {
+  padding: 1rem 1.5rem; border-right: 1px solid var(--border-mid); background: var(--bg-card);
+}
+.stat-cell:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--f-head); font-size: 2rem; font-weight: 700;
+  color: var(--accent-lit); line-height: 1; font-variant-numeric: tabular-nums;
+}
+.stat-lbl {
+  font-family: var(--f-mono); font-size: 0.6rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); margin-top: 0.2rem;
+}
+
+/* RESEARCH */
+.research-card {
+  border: 1px solid var(--border-mid); background: var(--bg-card);
+  padding: 2rem 2rem 2rem 2.5rem; position: relative; overflow: hidden;
+}
+.research-card::before {
+  content: ''; position: absolute; top:0; left:0;
+  width: 3px; height: 100%;
+  background: linear-gradient(to bottom, var(--accent-lit), var(--accent));
+}
+.research-card h3 {
+  font-family: var(--f-head); font-size: 1.45rem; font-weight: 700; margin-bottom: 0.2rem;
+}
+.research-lab {
+  font-family: var(--f-mono); font-size: 0.7rem;
+  color: var(--accent-lit); letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 1rem;
+}
+.research-card p { color: var(--fg-muted); font-size: 0.97rem; line-height: 1.75; max-width: 720px; }
+.research-bullets { list-style: none; margin-top: 0.9rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.research-bullets li {
+  font-size: 0.92rem; color: var(--fg-muted); padding-left: 1.2rem; position: relative; line-height: 1.6;
+}
+.research-bullets li::before {
+  content: '→'; position: absolute; left: 0; color: var(--accent-lit); font-family: var(--f-mono); font-size: 0.75rem;
+}
+
+/* PUBLICATIONS */
+.pub-list { display: flex; flex-direction: column; gap: 1rem; }
+.pub-card {
+  border: 1px solid var(--border); background: var(--bg-card);
+  padding: 1.25rem 1.25rem 1.25rem 1.75rem; position: relative;
+}
+.pub-card::before {
+  content: ''; position: absolute; top:0; left:0;
+  width: 3px; height: 100%; background: var(--amber);
+}
+.pub-badge {
+  font-family: var(--f-mono); font-size: 0.6rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 0.35rem;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.pub-badge::before {
+  content: ''; width: 5px; height: 5px; background: var(--amber); border-radius: 50%;
+}
+.pub-title {
+  font-family: var(--f-body); font-size: 0.97rem; font-weight: 600;
+  line-height: 1.45; margin-bottom: 0.25rem; color: var(--fg);
+}
+.pub-detail {
+  font-family: var(--f-mono); font-size: 0.7rem;
+  color: var(--fg-muted); letter-spacing: 0.02em;
+}
+
+/* PROJECTS */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: 1rem;
+}
+.project-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  display: flex; flex-direction: column; position: relative; overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.project-card:hover { border-color: var(--border-hi); transform: translateY(-2px); }
+.project-card.featured { border-color: var(--border-mid); }
+.project-card.featured::after {
+  content: '★ FEATURED'; position: absolute; top:0; right:0;
+  font-family: var(--f-mono); font-size: 0.58rem; letter-spacing: 0.1em;
+  padding: 0.3rem 0.65rem; background: var(--accent); color: #fff;
+}
+.project-visual {
+  width: 100%; aspect-ratio: 16/8; background: var(--bg-2);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; border-bottom: 1px solid var(--border);
+}
+.project-visual svg { width: 100%; height: 100%; }
+.project-body { padding: 1.2rem; flex: 1; display: flex; flex-direction: column; gap: 0.55rem; }
+.proj-cat { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-lit); }
+.proj-title { font-family: var(--f-head); font-size: 1.15rem; font-weight: 700; line-height: 1.15; text-wrap: balance; }
+.proj-desc { font-size: 0.88rem; color: var(--fg-muted); line-height: 1.65; flex: 1; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag {
+  font-family: var(--f-mono); font-size: 0.6rem;
+  padding: 0.18rem 0.45rem; border: 1px solid var(--border-mid);
+  color: var(--fg-muted); letter-spacing: 0.04em;
+}
+.proj-result {
+  font-family: var(--f-mono); font-size: 0.72rem;
+  padding: 0.4rem 0.65rem; background: var(--green-dim);
+  border-left: 2px solid var(--green); color: var(--green);
+  letter-spacing: 0.03em; line-height: 1.4; margin-top: auto;
+}
+
+/* SKILLS */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: 1.5rem;
+}
+.skill-group-label {
+  font-family: var(--f-mono); font-size: 0.65rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--accent-lit);
+  padding-bottom: 0.5rem; margin-bottom: 0.65rem; border-bottom: 1px solid var(--border);
+}
+.skill-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.skill-chip {
+  font-family: var(--f-mono); font-size: 0.68rem;
+  padding: 0.28rem 0.6rem; background: var(--bg-2);
+  border: 1px solid var(--border); color: var(--fg-muted);
+}
+
+/* EDUCATION */
+.edu-list { display: flex; flex-direction: column; gap: 1rem; }
+.edu-card {
+  border: 1px solid var(--border); background: var(--bg-card);
+  padding: 1.5rem 1.5rem 1.5rem 2rem; position: relative;
+}
+.edu-card::before {
+  content: ''; position: absolute; top:0; left:0;
+  width: 3px; height: 100%; background: var(--border-hi);
+}
+.edu-degree { font-family: var(--f-head); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.15rem; }
+.edu-school {
+  font-family: var(--f-mono); font-size: 0.7rem;
+  color: var(--accent-lit); letter-spacing: 0.07em;
+  text-transform: uppercase; margin-bottom: 0.65rem;
+}
+.edu-detail { font-size: 0.88rem; color: var(--fg-muted); line-height: 1.6; }
+.edu-highlights { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.65rem; }
+.highlight-chip {
+  font-family: var(--f-mono); font-size: 0.6rem;
+  padding: 0.2rem 0.5rem; background: var(--accent-dim);
+  color: var(--accent-lit); letter-spacing: 0.04em;
+  border: 1px solid rgba(61,168,255,0.2);
+}
+
+/* CONTACT */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  gap: 1.5rem; margin-bottom: 2rem;
+}
+.contact-label {
+  font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--fg-dim); margin-bottom: 0.25rem;
+}
+.contact-value { font-family: var(--f-mono); font-size: 0.88rem; color: var(--fg); user-select: all; }
+.contact-value a { color: var(--accent-lit); text-decoration: none; }
+.contact-value a:hover { text-decoration: underline; }
+.github-note {
+  font-family: var(--f-mono); font-size: 0.72rem; color: var(--fg-muted);
+  padding: 0.9rem 1.1rem; border: 1px dashed var(--border-mid);
+  margin-top: 1rem; display: flex; align-items: center; gap: 0.5rem;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0 2rem;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+  position: relative; z-index: 1;
+}
+footer p { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.08em; color: var(--fg-dim); }
+
+:focus-visible { outline: 2px solid var(--accent-lit); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .project-card, .btn { transition: none; } }
+</style>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">G.<em>Solaimalai</em></a>
+  <ul class="nav-links">
+    <li><a href="#research">Research</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="toggleTheme()">◐ Theme</button>
+</nav>
+
+<div class="page">
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-kicker">MASc Candidate · University of Waterloo · IMAE Recipient · 2026</div>
+  <h1>Girisankar<span class="line2">Solaimalai</span></h1>
+  <p class="hero-role">Mechanical &amp; Mechatronics Engineering · CFD · Aerosol Science · Automation</p>
+  <p class="hero-bio">
+    MASc candidate and IMAE recipient with peer-reviewed contributions in aerosol transport, CFD,
+    and fluid dynamics. Currently an R&amp;D Engineering Intern at Atmose, developing multiphysics
+    OpenFOAM models and authoring three manuscripts under review. Seven co-ops spanning R&amp;D,
+    process engineering, automotive manufacturing, HVAC, and power generation.
+  </p>
+  <div class="hero-actions">
+    <a href="#research" class="btn btn-primary">View Research</a>
+    <a href="#projects" class="btn btn-ghost">Engineering Projects</a>
+    <a href="#contact" class="btn btn-ghost">Contact</a>
+  </div>
+  <div class="stats-strip">
+    <div class="stat-cell">
+      <div class="stat-num">3</div>
+      <div class="stat-lbl">Papers Under Review</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">3.90</div>
+      <div class="stat-lbl">BASc GPA / 4.00</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">7</div>
+      <div class="stat-lbl">Co-op Terms</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">98%</div>
+      <div class="stat-lbl">Autonomous Robots</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="section" id="research">
+  <div class="section-eyebrow">Graduate Research</div>
+  <div class="section-title">R&amp;D — Aerosol Transport &amp; CFD</div>
+
+  <div class="research-card">
+    <h3>Fluid Dynamics &amp; Aerosol Instrumentation Technology</h3>
+    <div class="research-lab">Atmose · University of Waterloo · Mech &amp; Mechatronics Engineering · Sep 2025 – Present</div>
+    <p>
+      Conducting graduate research and industry R&amp;D at Atmose (Edmonton, AB) focused on the physics
+      of charged aerosol transport and precision measurement instrumentation. Work combines high-fidelity
+      multiphysics simulation in OpenFOAM with experimental validation to improve next-generation aerosol
+      measurement devices used in air quality and atmospheric science.
+    </p>
+    <ul class="research-bullets">
+      <li>Developed a coupled multiphysics CFD model in OpenFOAM integrating charged aerosol transport and electrostatics to optimise Faraday cup electrometer geometry for minimal current leakage and maximum signal.</li>
+      <li>Investigated residence time distributions (RTD) in a radioactive neutralizer using CFD and experimental methods; redesigned internal flow geometry to reduce recirculation and improve neutralization performance.</li>
+      <li>First-authored two peer-reviewed manuscripts; co-authored a third — all under review (see Publications below).</li>
+    </ul>
+    <div style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:1rem;">
+      <span class="tag">OpenFOAM</span>
+      <span class="tag">Multiphysics CFD</span>
+      <span class="tag">Charged Aerosol Transport</span>
+      <span class="tag">Electrostatics Modelling</span>
+      <span class="tag">RTD Analysis</span>
+      <span class="tag">Experimental Validation</span>
+      <span class="tag">IMAE Award</span>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="section" id="publications">
+  <div class="section-eyebrow">Peer-Reviewed Work</div>
+  <div class="section-title">Publications</div>
+  <div class="pub-list">
+
+    <div class="pub-card">
+      <div class="pub-badge">First Author · Under Review</div>
+      <div class="pub-title">Induced Currents in Faraday Cup Electrometers for Aerosol Charge Measurement</div>
+      <div class="pub-detail">Girisankar Solaimalai et al. · Manuscript under review · Atmose / University of Waterloo · 2026</div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-badge">First Author · Under Review</div>
+      <div class="pub-title">Residence Time Distribution in Aerosol Sampling Lines: CFD Modelling and Experimental Characterisation</div>
+      <div class="pub-detail">Girisankar Solaimalai et al. · Manuscript under review · Atmose / University of Waterloo · 2026</div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-badge">Co-Author · Under Review</div>
+      <div class="pub-title">Flow Geometry Optimisation of Radioactive Neutralizers for Improved Aerosol Neutralization Performance</div>
+      <div class="pub-detail">Co-authored · Manuscript under review · Atmose / University of Waterloo · 2026</div>
+    </div>
+
+  </div>
+  <p style="font-family:var(--f-mono); font-size:0.7rem; color:var(--fg-dim); margin-top:1rem; letter-spacing:0.04em;">
+    Note: titles are descriptive summaries; exact journal titles updated on publication.
+  </p>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-eyebrow">Engineering Portfolio</div>
+  <div class="section-title">Selected Projects</div>
+  <div class="project-grid">
+
+    <!-- 1 Autonomous Transport & Storage -->
+    <div class="project-card featured">
+      <div class="project-visual">
+        <svg viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="480" height="240" fill="#0B1628"/>
+          <line x1="0" y1="120" x2="480" y2="120" stroke="#0A7EFF" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.3"/>
+          <line x1="240" y1="0" x2="240" y2="240" stroke="#0A7EFF" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.3"/>
+          <rect x="60" y="40" width="360" height="8" fill="none" stroke="#3DA8FF" stroke-width="2"/>
+          <line x1="60" y1="44" x2="60" y2="180" stroke="#3DA8FF" stroke-width="2"/>
+          <line x1="420" y1="44" x2="420" y2="180" stroke="#3DA8FF" stroke-width="2"/>
+          <rect x="56" y="175" width="8" height="20" fill="#3DA8FF" opacity="0.7"/>
+          <rect x="416" y="175" width="8" height="20" fill="#3DA8FF" opacity="0.7"/>
+          <rect x="180" y="35" width="60" height="18" fill="#0A7EFF" opacity="0.8"/>
+          <line x1="210" y1="53" x2="210" y2="130" stroke="#3DA8FF" stroke-width="2.5"/>
+          <rect x="195" y="125" width="30" height="15" fill="none" stroke="#3DA8FF" stroke-width="1.5"/>
+          <line x1="198" y1="140" x2="198" y2="155" stroke="#3DA8FF" stroke-width="1.5"/>
+          <line x1="222" y1="140" x2="222" y2="155" stroke="#3DA8FF" stroke-width="1.5"/>
+          <rect x="100" y="155" width="20" height="25" fill="#1EB888" opacity="0.7"/>
+          <circle cx="350" cy="162" r="14" fill="none" stroke="#1EB888" stroke-width="2" opacity="0.7"/>
+          <rect x="310" y="170" width="50" height="10" fill="#0A7EFF" opacity="0.2"/>
+          <text x="335" y="192" font-family="'JetBrains Mono', monospace" font-size="7" fill="#3DA8FF" text-anchor="middle">DROP-OFF</text>
+          <text x="60" y="30" font-family="'JetBrains Mono', monospace" font-size="7" fill="#3DA8FF" opacity="0.8">X-RAIL [360mm]</text>
+          <text x="240" y="225" font-family="'JetBrains Mono', monospace" font-size="8" fill="#6E90B2" text-anchor="middle">AUTONOMOUS TRANSPORT &amp; STORAGE SYSTEM</text>
+        </svg>
+      </div>
+      <div class="project-body">
+        <div class="proj-cat">Robotics · Mechatronics · Project Manager</div>
+        <div class="proj-title">Autonomous Transport &amp; Storage System</div>
+        <div class="proj-desc">
+          Gantry-style pick-and-place robot transporting geometrically varied objects from a
+          drop-off zone to two storage heights. Led the team as Project Manager and Arduino Co-Lead —
+          responsible for CAD design, machining, and embedded control with IR remote and joystick
+          input plus sensor-based object detection.
+        </div>
+        <div class="proj-tags">
+          <span class="tag">CAD Design</span><span class="tag">Arduino / C++</span>
+          <span class="tag">Machining</span><span class="tag">3D Printing</span><span class="tag">Sensors</span>
+        </div>
+        <div class="proj-result">✓ 95% success rate across varied object geometries · All design requirements met</div>
+      </div>
+    </div>
+
+    <!-- 2 AGV Toyota -->
+    <div class="project-card featured">
+      <div class="project-visual">
+        <svg viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="480" height="240" fill="#0B1628"/>
+          <rect x="60" y="105" width="360" height="30" fill="none" stroke="#3DA8FF" stroke-width="1" stroke-dasharray="8,4" opacity="0.3"/>
+          <rect x="140" y="100" width="90" height="40" rx="4" fill="#0D1C32" stroke="#3DA8FF" stroke-width="1.5"/>
+          <rect x="152" y="112" width="66" height="16" rx="2" fill="#0A7EFF" opacity="0.4"/>
+          <circle cx="158" cy="145" r="7" fill="none" stroke="#3DA8FF" stroke-width="2"/>
+          <circle cx="222" cy="145" r="7" fill="none" stroke="#3DA8FF" stroke-width="2"/>
+          <rect x="270" y="90" width="12" height="60" fill="none" stroke="#1EB888" stroke-width="2"/>
+          <rect x="268" y="105" width="18" height="10" fill="#1EB888" opacity="0.6"/>
+          <circle cx="276" cy="122" r="6" fill="none" stroke="#1EB888" stroke-width="1.5"/>
+          <line x1="276" y1="116" x2="276" y2="90" stroke="#1EB888" stroke-width="1" stroke-dasharray="2,2"/>
+          <circle cx="302" cy="120" r="5" fill="#0A7EFF" opacity="0.8"/>
+          <text x="310" y="118" font-family="'JetBrains Mono', monospace" font-size="6" fill="#3DA8FF">MINOMI</text>
+          <text x="310" y="127" font-family="'JetBrains Mono', monospace" font-size="6" fill="#3DA8FF">SENSOR</text>
+          <path d="M240,120 L266,120" stroke="#6E90B2" stroke-width="1.5" marker-end="url(#arr2)"/>
+          <defs><marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6E90B2"/></marker></defs>
+          <text x="80" y="85" font-family="'JetBrains Mono', monospace" font-size="7" fill="#1EB888">STOPPER ENGAGED</text>
+          <text x="240" y="225" font-family="'JetBrains Mono', monospace" font-size="8" fill="#6E90B2" text-anchor="middle">AGV ALIGNMENT FAULT ELIMINATION — TOYOTA</text>
+        </svg>
+      </div>
+      <div class="project-body">
+        <div class="proj-cat">Industrial Automation · Co-op (Toyota Motor Mfg.)</div>
+        <div class="proj-title">Elimination of AGV Alignment Faults</div>
+        <div class="proj-desc">
+          Analysed PLC traffic counters to isolate overshoot as the root cause of daily Side Member
+          AGV faults. Designed, DFMA-optimised, and machined an in-house mechanical engagement stopper
+          with a cam-follower latch. Also developed DELMIA weld robot programs for Kaizen cycle-time
+          reduction and built a Power BI maintenance dashboard for real-time fault visibility.
+        </div>
+        <div class="proj-tags">
+          <span class="tag">SolidWorks</span><span class="tag">PLC / Root Cause</span>
+          <span class="tag">DFMA</span><span class="tag">DELMIA</span><span class="tag">Power BI</span><span class="tag">Machine Shop</span>
+        </div>
+        <div class="proj-result">✓ 63% of total AGV faults eliminated · 100% of alignment-overshoot faults resolved</div>
+      </div>
+    </div>
+
+    <!-- 3 Line Following Robot -->
+    <div class="project-card">
+      <div class="project-visual">
+        <svg viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="480" height="240" fill="#0B1628"/>
+          <path d="M80,180 Q180,100 240,120 Q300,140 400,60" fill="none" stroke="#3DA8FF" stroke-width="20" opacity="0.07"/>
+          <path d="M80,180 Q180,100 240,120 Q300,140 400,60" fill="none" stroke="#3DA8FF" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>
+          <rect x="215" y="105" width="50" height="30" rx="2" fill="#0D1C32" stroke="#3DA8FF" stroke-width="1.5"/>
+          <circle cx="220" cy="138" r="8" fill="none" stroke="#3DA8FF" stroke-width="2"/>
+          <circle cx="260" cy="138" r="8" fill="none" stroke="#3DA8FF" stroke-width="2"/>
+          <rect x="225" y="102" width="6" height="6" fill="#0A7EFF" opacity="0.9"/>
+          <rect x="240" y="102" width="6" height="6" fill="#0A7EFF" opacity="0.9"/>
+          <rect x="255" y="102" width="6" height="6" fill="#0A7EFF" opacity="0.9"/>
+          <text x="240" y="98" font-family="'JetBrains Mono', monospace" font-size="6" fill="#3DA8FF" text-anchor="middle">IR SENSORS</text>
+          <rect x="345" y="28" width="90" height="42" fill="#1EB888" opacity="0.12" stroke="#1EB888" stroke-width="1"/>
+          <text x="390" y="46" font-family="'JetBrains Mono', monospace" font-size="8" fill="#1EB888" text-anchor="middle">1ST PLACE</text>
+          <text x="390" y="60" font-family="'JetBrains Mono', monospace" font-size="6.5" fill="#1EB888" text-anchor="middle">SPEED + STABILITY</text>
+          <text x="240" y="225" font-family="'JetBrains Mono', monospace" font-size="8" fill="#6E90B2" text-anchor="middle">LINE FOLLOWING ROBOT — C++ / ARDUINO</text>
+        </svg>
+      </div>
+      <div class="project-body">
+        <div class="proj-cat">Robotics · Embedded Systems</div>
+        <div class="proj-title">Autonomous Line Following Robot</div>
+        <div class="proj-desc">
+          Designed chassis and programmed a line-following robot using an Arduino microcontroller
+          with an IR sensor array. Implemented a C++ control algorithm with feedback-based path
+          correction for smooth, high-speed operation. Competed against all class teams.
+        </div>
+        <div class="proj-tags">
+          <span class="tag">Arduino</span><span class="tag">C++</span>
+          <span class="tag">Sensors &amp; Actuators</span><span class="tag">Mechanical Design</span>
+        </div>
+        <div class="proj-result">✓ 1st place — fastest lap &amp; highest stability in class</div>
+      </div>
+    </div>
+
+    <!-- 4 Pneumatic Engine -->
+    <div class="project-card">
+      <div class="project-visual">
+        <svg viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="480" height="240" fill="#0B1628"/>
+          <circle cx="200" cy="115" r="55" fill="none" stroke="#3DA8FF" stroke-width="2"/>
+          <circle cx="200" cy="115" r="8" fill="#3DA8FF" opacity="0.7"/>
+          <line x1="200" y1="115" x2="200" y2="60" stroke="#3DA8FF" stroke-width="1.5"/>
+          <line x1="200" y1="115" x2="248" y2="143" stroke="#3DA8FF" stroke-width="1.5"/>
+          <line x1="200" y1="115" x2="152" y2="143" stroke="#3DA8FF" stroke-width="1.5"/>
+          <line x1="200" y1="60" x2="285" y2="75" stroke="#3DA8FF" stroke-width="2"/>
+          <rect x="283" y="63" width="55" height="24" rx="2" fill="none" stroke="#3DA8FF" stroke-width="1.5"/>
+          <rect x="338" y="50" width="70" height="50" fill="none" stroke="#3DA8FF" stroke-width="1.5"/>
+          <rect x="338" y="50" width="25" height="50" fill="#0A7EFF" opacity="0.15"/>
+          <path d="M423,75 L410,75" stroke="#1EB888" stroke-width="2" marker-end="url(#aArr)"/>
+          <defs><marker id="aArr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1EB888"/></marker></defs>
+          <text x="425" y="73" font-family="'JetBrains Mono', monospace" font-size="6.5" fill="#1EB888">AIR IN</text>
+          <path d="M200,170 Q240,190 280,170" fill="none" stroke="#6E90B2" stroke-width="2.5"/>
+          <text x="237" y="210" font-family="'JetBrains Mono', monospace" font-size="7" fill="#6E90B2" text-anchor="middle">BELT TO CONVEYOR</text>
+          <text x="240" y="230" font-family="'JetBrains Mono', monospace" font-size="8" fill="#6E90B2" text-anchor="middle">PNEUMATIC ENGINE — MACHINE SHOP</text>
+        </svg>
+      </div>
+      <div class="project-body">
+        <div class="proj-cat">Manufacturing · Machining</div>
+        <div class="proj-title">Pneumatic Engine — Machine Shop Project</div>
+        <div class="proj-desc">
+          Fabricated a functional pneumatically actuated air engine from raw stock. Required precise
+          tolerancing on the cylinder bore, piston fit, and flywheel bore for airtight operation.
+          The belt-coupled flywheel powers a conveyor belt when supplied with compressed air.
+        </div>
+        <div class="proj-tags">
+          <span class="tag">Lathe</span><span class="tag">Milling Machine</span>
+          <span class="tag">Precision Tolerancing</span><span class="tag">GD&amp;T</span>
+        </div>
+        <div class="proj-result">✓ Engine ran conveyor belt continuously for &gt;60 s on compressed air</div>
+      </div>
+    </div>
+
+    <!-- 5 Mask Disposal -->
+    <div class="project-card">
+      <div class="project-visual">
+        <svg viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="480" height="240" fill="#0B1628"/>
+          <rect x="155" y="30" width="90" height="150" fill="none" stroke="#3DA8FF" stroke-width="1.5"/>
+          <rect x="175" y="30" width="50" height="150" fill="#0A7EFF" opacity="0.05"/>
+          <circle cx="200" cy="55" r="20" fill="none" stroke="#3DA8FF" stroke-width="1.5"/>
+          <line x1="200" y1="35" x2="200" y2="75" stroke="#3DA8FF" stroke-width="1.5"/>
+          <line x1="180" y1="55" x2="220" y2="55" stroke="#3DA8FF" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <circle cx="315" cy="100" r="20" fill="none" stroke="#1EB888" stroke-width="1.5"/>
+          <line x1="315" y1="80" x2="315" y2="60" stroke="#1EB888" stroke-width="1.5"/>
+          <line x1="315" y1="100" x2="355" y2="100" stroke="#1EB888" stroke-width="1.5"/>
+          <rect x="355" y="92" width="30" height="16" fill="none" stroke="#1EB888" stroke-width="1.5"/>
+          <text x="315" y="138" font-family="'JetBrains Mono', monospace" font-size="7" fill="#1EB888" text-anchor="middle">SLIDER CRANK</text>
+          <text x="200" y="92" font-family="'JetBrains Mono', monospace" font-size="6" fill="#3DA8FF" text-anchor="middle">4-SLOT WHEEL</text>
+          <text x="240" y="225" font-family="'JetBrains Mono', monospace" font-size="8" fill="#6E90B2" text-anchor="middle">MASK DISPOSAL — SOLIDWORKS CAD DESIGN</text>
+        </svg>
+      </div>
+      <div class="project-body">
+        <div class="proj-cat">Mechanical Design · CAD</div>
+        <div class="proj-title">Contactless Mask Disposal System</div>
+        <div class="proj-desc">
+          Full mechanical design of a COVID-19 mask disposal bin to limit cross-contamination.
+          Sensor-triggered revolving door input (four-slot wheel + motor) and dual slider-crank
+          sealing mechanism using satellite pulleys. Complete 3D assembly, cross-sections, and
+          material selection using SolidWorks and GRANTA EduPack.
+        </div>
+        <div class="proj-tags">
+          <span class="tag">SolidWorks</span><span class="tag">GRANTA EduPack</span>
+          <span class="tag">GrabCAD</span><span class="tag">Material Selection</span>
+        </div>
+        <div class="proj-result">✓ All functional, non-functional, and constraint requirements met</div>
+      </div>
+    </div>
+
+    <!-- 6 Zeton -->
+    <div class="project-card">
+      <div class="project-visual">
+        <svg viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="480" height="240" fill="#0B1628"/>
+          <rect x="80" y="75" width="60" height="90" rx="4" fill="none" stroke="#3DA8FF" stroke-width="1.5"/>
+          <ellipse cx="110" cy="75" rx="30" ry="8" fill="none" stroke="#3DA8FF" stroke-width="1.5"/>
+          <line x1="140" y1="120" x2="220" y2="120" stroke="#3DA8FF" stroke-width="2"/>
+          <line x1="220" y1="80" x2="220" y2="165" stroke="#3DA8FF" stroke-width="2"/>
+          <polygon points="210,110 230,110 220,120" fill="#3DA8FF" opacity="0.8"/>
+          <polygon points="210,130 230,130 220,120" fill="#3DA8FF" opacity="0.8"/>
+          <line x1="220" y1="95" x2="220" y2="110" stroke="#3DA8FF" stroke-width="1.5"/>
+          <circle cx="290" cy="120" r="15" fill="none" stroke="#1EB888" stroke-width="1.5"/>
+          <text x="290" y="124" font-family="'JetBrains Mono', monospace" font-size="9" fill="#1EB888" text-anchor="middle">FI</text>
+          <line x1="305" y1="120" x2="340" y2="120" stroke="#3DA8FF" stroke-width="2"/>
+          <circle cx="370" cy="120" r="20" fill="none" stroke="#6E90B2" stroke-width="1.5"/>
+          <text x="370" y="116" font-family="'JetBrains Mono', monospace" font-size="7" fill="#6E90B2" text-anchor="middle">CTRL</text>
+          <text x="370" y="127" font-family="'JetBrains Mono', monospace" font-size="7" fill="#6E90B2" text-anchor="middle">INLK</text>
+          <!-- Thermal gradient bar -->
+          <rect x="80" y="182" width="120" height="8" fill="url(#heatGrad)"/>
+          <defs>
+            <linearGradient id="heatGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#0A7EFF" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#F0A000" stop-opacity="0.8"/>
+            </linearGradient>
+          </defs>
+          <text x="80" y="200" font-family="'JetBrains Mono', monospace" font-size="6.5" fill="#6E90B2">25°C → 600°C HEAT TRACING</text>
+          <text x="240" y="225" font-family="'JetBrains Mono', monospace" font-size="8" fill="#6E90B2" text-anchor="middle">PROCESS ENGINEERING — ZETON (CARBON CAPTURE)</text>
+        </svg>
+      </div>
+      <div class="project-body">
+        <div class="proj-cat">Process Engineering · Co-op (Zeton Inc.)</div>
+        <div class="proj-title">Carbon Capture Plant — Thermal Modelling &amp; P&amp;IDs</div>
+        <div class="proj-desc">
+          Performed transient thermal modelling in MATLAB to size heat tracing systems (15–25 W/m)
+          ensuring all piping and heat exchangers reach 600°C before introducing a proprietary
+          molten salt. Developed and verified P&amp;IDs for the pilot plant (200+ instruments) and
+          co-authored the Cause &amp; Effect matrix defining 80+ interlocks, alarms, and shutdowns.
+        </div>
+        <div class="proj-tags">
+          <span class="tag">MATLAB (Thermal)</span><span class="tag">P&amp;ID</span>
+          <span class="tag">Heat Tracing</span><span class="tag">Process Safety</span><span class="tag">C&amp;E Matrix</span>
+        </div>
+        <div class="proj-result">✓ 200+ instruments verified · 80+ interlocks defined · Molten salt process safety ensured</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="section-eyebrow">Technical Capabilities</div>
+  <div class="section-title">Skills &amp; Tools</div>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-label">Simulation &amp; CFD</div>
+      <div class="skill-chips">
+        <span class="skill-chip">OpenFOAM</span>
+        <span class="skill-chip">ANSYS Fluent</span>
+        <span class="skill-chip">ANSYS CFX</span>
+        <span class="skill-chip">MATLAB</span>
+        <span class="skill-chip">Simulink</span>
+        <span class="skill-chip">Python</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">CAD &amp; Design</div>
+      <div class="skill-chips">
+        <span class="skill-chip">SolidWorks</span>
+        <span class="skill-chip">Siemens NX</span>
+        <span class="skill-chip">CATIA</span>
+        <span class="skill-chip">Onshape</span>
+        <span class="skill-chip">Revit</span>
+        <span class="skill-chip">GrabCAD</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Robotics &amp; Automation</div>
+      <div class="skill-chips">
+        <span class="skill-chip">ROS 2</span>
+        <span class="skill-chip">PLC Programming</span>
+        <span class="skill-chip">DELMIA</span>
+        <span class="skill-chip">Arduino / C++</span>
+        <span class="skill-chip">FPGA</span>
+        <span class="skill-chip">Embedded C</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Manufacturing &amp; Methods</div>
+      <div class="skill-chips">
+        <span class="skill-chip">Lathe / Mill</span>
+        <span class="skill-chip">GD&amp;T (ASME Y14.5)</span>
+        <span class="skill-chip">DFMA / DFMEA</span>
+        <span class="skill-chip">Rapid Prototyping</span>
+        <span class="skill-chip">P&amp;ID</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Analysis &amp; Theory</div>
+      <div class="skill-chips">
+        <span class="skill-chip">Aerosol Transport</span>
+        <span class="skill-chip">Fluid Dynamics</span>
+        <span class="skill-chip">Heat Transfer</span>
+        <span class="skill-chip">Thermodynamics</span>
+        <span class="skill-chip">Control Systems</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Data &amp; Reporting</div>
+      <div class="skill-chips">
+        <span class="skill-chip">Power BI</span>
+        <span class="skill-chip">GRANTA EduPack</span>
+        <span class="skill-chip">Excel / VBA</span>
+        <span class="skill-chip">Technical Writing</span>
+        <span class="skill-chip">Peer Review</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section" id="education">
+  <div class="section-eyebrow">Academic Background</div>
+  <div class="section-title">Education</div>
+  <div class="edu-list">
+    <div class="edu-card">
+      <div class="edu-degree">Master of Applied Science — Mechanical &amp; Mechatronics Engineering</div>
+      <div class="edu-school">University of Waterloo · Sep 2025 – Aug 2027 (expected)</div>
+      <div class="edu-detail">
+        Research in fluid dynamics and aerosol instrumentation technology. Avg 86.75% across graduate coursework.
+        Coursework: CFD for Engineering Design · Advanced Applied Thermal Engineering · Advanced Fluid Mechanics · Convective Heat Transfer.
+      </div>
+      <div class="edu-highlights">
+        <span class="highlight-chip">IMAE Award</span>
+        <span class="highlight-chip">ME 597 AMR — 98%</span>
+        <span class="highlight-chip">ME 566 — 93%</span>
+        <span class="highlight-chip">ME 654 — 99%</span>
+        <span class="highlight-chip">ME 652 — 82%</span>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Bachelor of Applied Science — Mechanical Engineering (Mechatronics Option)</div>
+      <div class="edu-school">University of Waterloo · Sep 2020 – May 2025</div>
+      <div class="edu-detail">
+        GPA 3.90 / 4.00 · Dean's Honours throughout · Seven co-op terms · Mechatronics option.
+      </div>
+      <div class="edu-highlights">
+        <span class="highlight-chip">GPA 3.90 / 4.00</span>
+        <span class="highlight-chip">Dean's Honours</span>
+        <span class="highlight-chip">President's Scholarship of Distinction 2020</span>
+        <span class="highlight-chip">President's Research Award 2025</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-eyebrow">Get in Touch</div>
+  <div class="section-title">Contact</div>
+  <div class="contact-grid">
+    <div class="contact-item">
+      <div class="contact-label">Email</div>
+      <div class="contact-value">girisankarsolaimalai@gmail.com</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">Phone</div>
+      <div class="contact-value">+1 519-729-1248</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">LinkedIn</div>
+      <div class="contact-value">
+        <a href="https://linkedin.com/in/girisankar" target="_blank" rel="noopener">linkedin.com/in/girisankar</a>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">Location</div>
+      <div class="contact-value">Waterloo, ON, Canada</div>
+    </div>
+  </div>
+  <div class="github-note">
+    <span style="color:var(--accent-lit)">⊕</span>
+    GitHub profile in progress — repository links for project code coming soon.
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<footer>
+  <p>© 2026 Girisankar Solaimalai · Mechanical &amp; Mechatronics Engineering, University of Waterloo</p>
+  <p>Last updated October 2026</p>
+</footer>
+
+<script>
+function toggleTheme() {
+  const r = document.documentElement;
+  const c = r.getAttribute('data-theme');
+  if (c === 'light') r.removeAttribute('data-theme');
+  else if (c === 'dark') r.setAttribute('data-theme', 'light');
+  else r.setAttribute('data-theme', 'dark');
+  try { localStorage.setItem('theme', r.getAttribute('data-theme') || 'system'); } catch(e) {}
+}
+try {
+  const s = localStorage.getItem('theme');
+  if (s && s !== 'system') document.documentElement.setAttribute('data-theme', s);
+} catch(e) {}
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
